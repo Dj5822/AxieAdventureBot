@@ -78,7 +78,9 @@ for i in range(int(loop_count)):
     # wait for loading screen
     print("waiting for loading screen")
     while not turn_started():
-        time.sleep(get_random_time() + 0.4)
+        pyautogui.moveTo(x, y, get_random_time(), pyautogui.easeOutQuad)
+        pyautogui.click(clicks=1, interval=get_random_time())
+        time.sleep(get_random_time() + 1)
 
     continue_battle = True
 
