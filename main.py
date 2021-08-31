@@ -54,23 +54,48 @@ def check_victory():
         return True
 
 
-continue_battle = True
+def find_start():
+    position = pyautogui.locateOnScreen("battle/start.png", confidence=0.97)
+    if position is None:
+        return False
+    else:
+        return True
 
-while continue_battle:
-    print("selecting cards")
-    select_cards()
-    print("ending turn")
-    end_turn()
-    print("waiting...")
+
+loop_count = input("Input the number of times you would like to repeat the battle: ")
+
+for i in range(int(loop_count)):
+    # adventure menu
+    print("starting new battle")
+    while not find_start():
+        time.sleep(get_random_time() + 0.4)
+    position = pyautogui.locateOnScreen("battle/start.png", confidence=0.97)
+    x = random.randint(position.left, position.left + position.width)
+    y = random.randint(position.top, position.top + position.height)
+    pyautogui.moveTo(x, y, get_random_time(), pyautogui.easeOutQuad)
+    pyautogui.click(clicks=1, interval=get_random_time())
+
+    # wait for loading screen
+    print("waiting for loading screen")
     while not turn_started():
-        time.sleep(get_random_time()+0.4)
-        if check_victory():
-            print("Victory!")
-            continue_battle = False
-            pyautogui.click()
-            time.sleep(get_random_time() + 0.4)
-            pyautogui.click()
-            break
-    print("turn started")
+        time.sleep(get_random_time() + 0.4)
 
+    continue_battle = True
 
+    # the battle loop
+    while continue_battle:
+        print("turn started")
+        print("selecting cards")
+        select_cards()
+        print("ending turn")
+        end_turn()
+        print("waiting...")
+        while not turn_started():
+            time.sleep(get_random_time()+0.4)
+            if check_victory():
+                print("Victory!")
+                continue_battle = False
+                pyautogui.click()
+                time.sleep(get_random_time() + 0.4)
+                pyautogui.click()
+                break
