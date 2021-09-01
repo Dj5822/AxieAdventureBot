@@ -1,6 +1,7 @@
 import pyautogui
 import time
 import random
+import admin
 
 
 def get_random_time():
@@ -61,6 +62,9 @@ def find_start():
     else:
         return True
 
+
+if not admin.isUserAdmin():
+    admin.runAsAdmin()
 
 loop_count = input("Input the number of times you would like to repeat the battle: ")
 
