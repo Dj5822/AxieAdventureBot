@@ -101,8 +101,8 @@ for i in range(int(loop_count)):
             if check_victory():
                 print("Victory!")
                 continue_battle = False
+                time.sleep(get_random_time() + 0.4)
                 pyautogui.click()
-                while check_victory():
-                    time.sleep(get_random_time() + 0.4)
-                    pyautogui.click()
+                time.sleep(get_random_time() + 0.8)
+                pyautogui.click()
                 break
